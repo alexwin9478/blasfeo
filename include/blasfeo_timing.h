@@ -38,7 +38,14 @@
 
 //#include <stdbool.h>
 
-#if (defined _WIN32 || defined _WIN64) && !(defined __MINGW32__ || defined __MINGW64__)
+#if(defined __DSPACE__)
+
+	#include <brtenv.h>
+
+	typedef struct blasfeo_timer_ {
+		double time;
+	} blasfeo_timer;
+#elif (defined _WIN32 || defined _WIN64) && !(defined __MINGW32__ || defined __MINGW64__)
 
 	/* Use Windows QueryPerformanceCounter for timing. */
 	#include <Windows.h>
@@ -61,13 +68,6 @@
 		mach_timebase_info_data_t tinfo;
 	} blasfeo_timer;
 
-#elif(defined __DSPACE__)
-
-	#include <brtenv.h>
-
-	typedef struct blasfeo_timer_ {
-		double time;
-	} blasfeo_timer;
 
 #elif(defined __XILINX_NONE_ELF__ || defined __XILINX_ULTRASCALE_NONE_ELF_JAILHOUSE__)
 
